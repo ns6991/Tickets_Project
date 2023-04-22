@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "536701265274",
+    "project_id": "tickets-project-8310d",
+    "storage_bucket": "tickets-project-8310d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536701265274:android:06f85cdcdf72a24f29a2c3",
+        "android_client_info": {
+          "package_name": "com.example.tickets_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536701265274-vv8fcc7prts88cucpi4njils7mgm2mfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJeGC_4mnuVwE8kW9tUKFA0RUyT-qvrrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536701265274-vv8fcc7prts88cucpi4njils7mgm2mfa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
