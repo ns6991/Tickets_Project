@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -228,6 +230,24 @@ public class UploadTicket_Activity extends AppCompatActivity {
 
     private void saveData(String a){
         ids.add(a);
+        Map<String,String> one= new HashMap<>();
+        one.put("UploadID",a);
+
+        db.collection("ID collection")
+                .document(a)
+                .set(one)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(UploadTicket_Activity.this, "id update", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(UploadTicket_Activity.this, "id error update", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 
@@ -238,7 +258,7 @@ public class UploadTicket_Activity extends AppCompatActivity {
 
 
         db
-                .collection("TicketsInfoToConfirm")
+                .collection("ID collection")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -290,7 +310,14 @@ public class UploadTicket_Activity extends AppCompatActivity {
         one.put("OwnerEmail",emailOfOwner);
         one.put("UploadID",ids.get(0));
         one.put("Active","1");
-        one.put("ManagerConfirm","0");
+        if(emailOfOwner.equals("noashetrit@gmail.com")) {
+            one.put("ManagerConfirm","1");
+
+        }
+        else {
+            one.put("ManagerConfirm","0");
+
+        }
         return one;
 
     }
@@ -299,8 +326,15 @@ public class UploadTicket_Activity extends AppCompatActivity {
     public void uploadPost(View view) throws ParseException {
         if(checkValues()){
             Map<String,String> map1= createMap();
+            String coll = "";
+            int code = 0;
+            if(emailOfOwner.equals("noashetrit@gmail.com")){
+                coll = "TicketsInfo";
+                code =1;
+            }
+            else coll = "TicketsInfoToConfirm";
 
-            db.collection("TicketsInfoToConfirm").document(map1.get("UploadID")).set(map1)
+            db.collection(coll).document(map1.get("UploadID")).set(map1)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
@@ -318,6 +352,18 @@ public class UploadTicket_Activity extends AppCompatActivity {
 
             String strDate = format.format(Calendar.getInstance().getTime());
             updateUserInfo(map1.get("UploadID"),map1.get("Active"),strDate );
+
+            if(code==0){
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(UploadTicket_Activity.this, "notification");
+                builder.setContentTitle("your Post successfully received");
+                builder.setContentText("After the system check your post, a mail will be send to you with information about your ticket");
+                builder.setSmallIcon(R.drawable.ic_launcher_background);
+                builder.setAutoCancel(true);
+
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(UploadTicket_Activity.this);
+                managerCompat.notify(1,builder.build());
+
+            }
 
             checkWishList();
 

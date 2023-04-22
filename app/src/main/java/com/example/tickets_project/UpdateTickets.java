@@ -42,6 +42,7 @@ public class UpdateTickets extends AppCompatActivity {
     String id;
 
     String active1;
+    String email1;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageReference;
@@ -68,6 +69,7 @@ public class UpdateTickets extends AppCompatActivity {
         gi = getIntent();
         String[] info = gi.getStringArrayExtra("Information");
         int change = gi.getIntExtra("CanChange",0);
+        email1 = gi.getStringExtra("Email");
 
         if(info[6]=="1") active.setChecked(true);
         if(info[6]=="0") active.setChecked(false);
@@ -144,6 +146,8 @@ public class UpdateTickets extends AppCompatActivity {
 
     public void back(View view) {
         si = new Intent(this, PersonalZone.class);
+        si.putExtra("Email",email1);
+
         startActivity(si);
     }
 

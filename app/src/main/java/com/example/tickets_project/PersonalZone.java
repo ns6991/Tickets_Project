@@ -5,31 +5,23 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.view.MenuItemCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tickets_project.viewmodel.Manager_Activity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -185,6 +177,7 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
             String[] s  = retA.get(i);
             si = new Intent(this, UpdateTickets.class);
             si.putExtra("Information",s);
+            si.putExtra("Email", Email);
             si.putExtra("CanChange",1);
         }
         else{
@@ -193,6 +186,8 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
             String[] s  = retNA.get(i);
             si = new Intent(this, UpdateTickets.class);
             si.putExtra("Information",s);
+            si.putExtra("Email", Email);
+
             si.putExtra("CanChange",0);
         }
 
@@ -253,53 +248,57 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void upload(View view) {
-        db.collection("UserInfo").document(Email).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            try {
-                                if (documentSnapshot.getString("CanUploadMore") != "") {
-                                    Date canUploadMore = format.parse(documentSnapshot.getString("CanUploadMore"));
-                                    String strDate = format.format(Calendar.getInstance().getTime());
-                                    Date today = format.parse(strDate);
+        if(Email.equals("noashetrit@gmail.com")) uploadp();
+        else{
+            db.collection("UserInfo").document(Email).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                try {
+                                    if (documentSnapshot.getString("CanUploadMore") != "") {
+                                        Date canUploadMore = format.parse(documentSnapshot.getString("CanUploadMore"));
+                                        String strDate = format.format(Calendar.getInstance().getTime());
+                                        Date today = format.parse(strDate);
 
-                                    if (today.before(canUploadMore)) {
+                                        if (today.before(canUploadMore)) {
 
-                                        adb.setTitle("your last upload was on: " + documentSnapshot.getString("LastUpload"));
-                                        adb.setMessage("you can upload again on: " + documentSnapshot.getString("CanUploadMore"));
+                                            adb.setTitle("your last upload was on: " + documentSnapshot.getString("LastUpload"));
+                                            adb.setMessage("you can upload again on: " + documentSnapshot.getString("CanUploadMore"));
 
-                                        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                dialogInterface.dismiss();
-                                            }
-                                        });
-                                        ad = adb.create();
-                                        ad.show();
-                                    } else {
-                                        uploadp();
+                                            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    dialogInterface.dismiss();
+                                                }
+                                            });
+                                            ad = adb.create();
+                                            ad.show();
+                                        } else {
+                                            uploadp();
 
+                                        }
                                     }
+                                    else uploadp();
+                                } catch (ParseException e) {
+                                    throw new RuntimeException(e);
                                 }
-                                else uploadp();
-                            } catch (ParseException e) {
-                                throw new RuntimeException(e);
+
+                            } else {
+                                Toast.makeText(PersonalZone.this, "doc doesn't exist", Toast.LENGTH_SHORT).show();
+
                             }
 
-                        } else {
-                            Toast.makeText(PersonalZone.this, "doc doesn't exist", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
                         }
+                    });
+        }
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
 
 
     }

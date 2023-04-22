@@ -15,15 +15,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.tickets_project.viewmodel.Manager_Activity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,6 +28,11 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TicketsManagerInformation extends AppCompatActivity {
 
@@ -59,6 +61,7 @@ public class TicketsManagerInformation extends AppCompatActivity {
         price = findViewById(R.id.priceTvIDM);
         amount = findViewById(R.id.amountTVM);
         imageView = findViewById(R.id.imageViewMan);
+        adb = new AlertDialog.Builder(this);
 
         gi = getIntent();
         info = gi.getStringArrayExtra("TicketInfo");
@@ -128,27 +131,65 @@ public class TicketsManagerInformation extends AppCompatActivity {
     public void ticDoc(View view) {
     }
 
+    private Map<String,String> createMap(){
+        Map<String,String> one= new HashMap<>();
+
+        one.put("Name",info[0]);
+        one.put("Place",info[1]);
+        one.put("Date",info[2]);
+        one.put("Category",info[3]);
+        one.put("Price",info[4]);
+        one.put("Amount",info[5]);
+        one.put("OwnerEmail",info[6]);
+        one.put("UploadID",info[7]);
+        one.put("Active",info[8]);
+        one.put("ManagerConfirm","1");
+        return one;
+
+    }
+
     public void Confirm(View view) {
 
         adb.setTitle("Are you sure that this ticket is approved?");
         adb.setPositiveButton("YES!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                db.collection("TicketsInfo").document(info[7])
-                        .update("Active","1"
-                                ,"ManagerConfirm","1")
+                Map<String,String> map1= createMap();
+
+                db.collection("TicketsInfo").document(map1.get("UploadID")).set(map1)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully updated!");
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(TicketsManagerInformation.this, "saved successfully", Toast.LENGTH_SHORT).show();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error updating document", e);
+                                Toast.makeText(TicketsManagerInformation.this, "error", Toast.LENGTH_SHORT).show();
+
                             }
                         });
+
+                db.collection("TicketsInfoToConfirm").document(map1.get("UploadID"))
+                        .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(TicketsManagerInformation.this, "delete successfully", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(TicketsManagerInformation.this, "delete error", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                back(view);
+
+                //send email
             }
         });
         adb.setNegativeButton("NO..", new DialogInterface.OnClickListener() {
@@ -168,21 +209,48 @@ public class TicketsManagerInformation extends AppCompatActivity {
         adb.setPositiveButton("YES!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                db.collection("TicketsInfo").document(info[7])
-                        .update("Active","0"
-                                ,"ManagerConfirm","0")
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                db.collection("TicketsInfoToConfirm").document(info[7])
+                        .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully updated!");
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(TicketsManagerInformation.this, "delete successfully", Toast.LENGTH_SHORT).show();
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error updating document", e);
+                                Toast.makeText(TicketsManagerInformation.this, "delete error", Toast.LENGTH_SHORT).show();
+
                             }
                         });
+
+
+
+
+
+
+                db.collection("UserInfo").document(info[6]).update("CanUploadMore",""
+                                    ,"LastUpload","")
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error updating document", e);
+                                }
+                            });
+                back(view);
+
+                //send email
+
+
+
+
             }
         });
         adb.setNegativeButton("NO..", new DialogInterface.OnClickListener() {
