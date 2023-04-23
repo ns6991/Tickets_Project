@@ -84,7 +84,7 @@ public class UploadTicket_Activity extends AppCompatActivity {
     SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yy");
 
     Uri mImg;
-    StorageReference mStorageRef;
+    StorageReference mStorageRef  ;
     DatabaseReference mDatabaseRef;
     StorageTask mUploadImageTask;
     ProgressBar progressBar;
@@ -112,6 +112,8 @@ public class UploadTicket_Activity extends AppCompatActivity {
         gi = getIntent();
         emailOfOwner = gi.getStringExtra("Email");
         progressBar = findViewById(R.id.progressBar);
+        upldID = gi.getStringExtra("upID");
+        ids.add(upldID);
 
         adp = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,categories);
         Category.setAdapter(adp);
@@ -142,14 +144,16 @@ public class UploadTicket_Activity extends AppCompatActivity {
         });
 
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploadsImages");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsImages");
+
+
 
         adb = new AlertDialog.Builder(this);
 
         //Toast.makeText(UploadTicket_Activity.this, "hihihi" +ids.get(0), Toast.LENGTH_SHORT).show();
 
-        setUploadID();
+        //setUploadID();
     }
 
 
@@ -204,6 +208,10 @@ public class UploadTicket_Activity extends AppCompatActivity {
                 date.requestFocus();
                 return false;
             }
+            if(ids.isEmpty()){
+                return false;
+
+            }
             if (TextUtils.isEmpty(Name.getText().toString())) {
                 Name.setError("event's name cannot be empty");
                 Name.requestFocus();
@@ -228,69 +236,8 @@ public class UploadTicket_Activity extends AppCompatActivity {
 
     }
 
-    private void saveData(String a){
-        ids.add(a);
-        Map<String,String> one= new HashMap<>();
-        one.put("UploadID",a);
-
-        db.collection("ID collection")
-                .document(a)
-                .set(one)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(UploadTicket_Activity.this, "id update", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(UploadTicket_Activity.this, "id error update", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-    }
 
 
-    public void setUploadID() {
-        if(!ids.isEmpty()) ids.clear();
-        List<Integer> lst = new ArrayList<>();
-
-
-        db
-                .collection("ID collection")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots ) {
-                        List<DocumentSnapshot> snapshots = queryDocumentSnapshots.getDocuments();
-                        for (DocumentSnapshot sn : snapshots) {
-                            lst.add(Integer.parseInt(sn.getString("UploadID")));
-                        }
-                        Collections.sort(lst, Collections.reverseOrder());
-                        int ind = 0;
-                        if(!lst.isEmpty()) ind = lst.get(0)+1;
-
-
-                        System.out.println(ind);
-
-                        saveData(ind+"");
-                        Toast.makeText(UploadTicket_Activity.this, "" +ids.get(0), Toast.LENGTH_SHORT).show();
-
-
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "FAIL: " , e);
-                        Toast.makeText(UploadTicket_Activity.this, "hello!" , Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-    }
     private Map<String,String> createMap(){
         Map<String,String> one= new HashMap<>();
 
@@ -375,7 +322,7 @@ public class UploadTicket_Activity extends AppCompatActivity {
         else{
             si = new Intent(this,Terms_activity.class);
             adb.setTitle("you can't uploads this ticket's post");
-            adb.setMessage("maybe you are pass the limit of tickets");
+            adb.setMessage("check again ticket's details and if your upload tickets on pdf");
             adb.setPositiveButton("Terms", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -433,7 +380,7 @@ public class UploadTicket_Activity extends AppCompatActivity {
                                     progressBar.setProgress(0);
                                 }
                             }, 5000);
-                            Upload upload = new Upload(Name.getText().toString(), taskSnapshot.getStorage().getDownloadUrl().toString());
+                            Upload upload = new Upload(ids.get(0), taskSnapshot.getStorage().getDownloadUrl().toString());
                             String uploadImageID = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadImageID).setValue(upload);
                             Toast.makeText(UploadTicket_Activity.this,"Upload successful", Toast.LENGTH_SHORT).show();
@@ -464,21 +411,22 @@ public class UploadTicket_Activity extends AppCompatActivity {
 
     }
     public void uploadImage(View view) {
-        openFiles();
-        if(mUploadImageTask != null && mUploadImageTask.isInProgress()){
-            Toast.makeText(this,"Upload in progress", Toast.LENGTH_SHORT).show();
+        if(!ids.isEmpty()){
+            openFiles();
+            if(mUploadImageTask != null && mUploadImageTask.isInProgress()){
+                Toast.makeText(this,"Upload in progress", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                uploadFile();
+            }
         }
         else{
-            uploadFile();
+            Toast.makeText(this,"please upload ticket pdf before.", Toast.LENGTH_SHORT).show();
+
         }
 
+
     }
-
-
-
-
-
-
 
 
     private boolean relevant(String date){
@@ -534,4 +482,12 @@ public class UploadTicket_Activity extends AppCompatActivity {
     }
 
 
+
+
+    public void uploadPDF(View view) {
+        //setUploadID();
+        si = new Intent(this, SelectPDF_Activity.class);
+        si.putExtra("Email" , emailOfOwner);
+        startActivity(si);
+    }
 }

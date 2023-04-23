@@ -47,7 +47,7 @@ import io.grpc.Context;
 public class TicketsInformation extends AppCompatActivity {
 
     Intent si,gi;
-    TextView name,place,date_time,price,amount;
+    TextView name,place,date_time,price,amount,category;
 
     ImageView imageView;
     String[] info;
@@ -70,15 +70,17 @@ public class TicketsInformation extends AppCompatActivity {
         price = findViewById(R.id.priceTvID);
         amount = findViewById(R.id.amountTV);
         imageView = findViewById(R.id.imageView);
+        category = findViewById(R.id.categoryIn);
 
         gi = getIntent();
         info = gi.getStringArrayExtra("TicketInfo");
         db = FirebaseFirestore.getInstance();
-        name.setText(info[0]);
-        place.setText(info[1]);
-        date_time.setText(info[2]);
-        price.setText(info[4]);
-        amount.setText(info[5]);
+        name.setText("Event Name: " + info[0]);
+        place.setText("Event place: " +info[1]);
+        date_time.setText("Event Date: " +info[2]);
+        category.setText("Event Category: " +info[3]);
+        price.setText("Tickets Price:\n" +info[4]);
+        amount.setText("Number of Tickets :\n"+info[5]);
         imageID = info[7];
 
         aSwitch = findViewById(R.id.switch3);
@@ -98,7 +100,7 @@ public class TicketsInformation extends AppCompatActivity {
         progressDialog.show();
         Toast.makeText(this, "imageID" +imageID, Toast.LENGTH_SHORT).show();
 
-        storageReference = FirebaseStorage.getInstance().getReference("uploads/" + imageID + ".jpg");
+        storageReference = FirebaseStorage.getInstance().getReference("uploadsImages/" + imageID + ".jpg");
         if(storageReference.equals(null)){
             imageView.setImageResource(R.drawable.ti);
         }
@@ -106,6 +108,13 @@ public class TicketsInformation extends AppCompatActivity {
             Glide.with(TicketsInformation.this)
                     .load(storageReference)
                     .into(imageView);
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    seeImage();
+                }
+            });
         }
 
 
@@ -144,6 +153,13 @@ public class TicketsInformation extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+    private void seeImage(){
+        si = new Intent(this, Image_Activity.class);
+        si.putExtra("TicketInfo", info );
+        si.putExtra("storageRef",("uploadsImages/" + imageID + ".jpg"));
+        si.putExtra("activity" , "information");
+        startActivity(si);
     }
 
 

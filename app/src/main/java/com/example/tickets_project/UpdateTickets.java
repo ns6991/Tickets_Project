@@ -61,6 +61,7 @@ public class UpdateTickets extends AppCompatActivity {
         iv = findViewById(R.id.imageViewEdit);
 
 
+
         price.setEnabled(false);
         amount.setEnabled(false);
 
@@ -79,13 +80,21 @@ public class UpdateTickets extends AppCompatActivity {
         date.setText(info[2]);
         price.setText(info[3]);
         amount.setText(info[4]);
+
+        name.setText("Event Name: " + info[0]);
+        place.setText("Event place: " +info[1]);
+        date.setText("Event Date: " +info[2]);
+        price.setText( info[3]);
+        amount.setText(info[4]);
+
+
         if(change==1) {
             price.setEnabled(true);
             amount.setEnabled(true);
         }
         id = info[6];
 
-        storageReference = FirebaseStorage.getInstance().getReference("uploads/" + id + ".jpg");
+        storageReference = FirebaseStorage.getInstance().getReference("uploadsImages/" + id + ".jpg");
         System.out.println(id+"333333333333333333");
         if(storageReference.equals(null)){
             iv.setImageResource(R.drawable.ti);
@@ -94,6 +103,7 @@ public class UpdateTickets extends AppCompatActivity {
             Glide.with(UpdateTickets.this)
                     .load(storageReference)
                     .into(iv);
+
         }
 
         progressDialog = new ProgressDialog(UpdateTickets.this);

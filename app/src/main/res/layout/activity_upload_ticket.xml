@@ -53,13 +53,13 @@
                 android:id="@+id/categoryID"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="7"
+                android:layout_weight="5"
                 android:backgroundTint="#FF659A" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3" />
+                android:layout_weight="2" />
 
             <EditText
                 android:id="@+id/nameID"
@@ -94,7 +94,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="7"
+                android:layout_weight="6"
                 android:orientation="horizontal">
 
                 <EditText
@@ -134,14 +134,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoText="false"
-                android:text="amount     "
-                android:textAlignment="viewEnd"
+                android:text="    amount"
+                android:textAlignment="textStart"
                 android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="7"
+                android:layout_weight="6"
                 android:orientation="horizontal">
 
                 <Space
@@ -186,20 +186,56 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/uploadImgID"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="7"
-                android:background="#FF3C7F"
-                android:onClick="uploadImage"
-                android:text="upload image"
-                android:textColor="#FFFFC2E9" />
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5" />
+
+                <Button
+                    android:id="@+id/uploadImgID"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:background="#FF3C7F"
+                    android:onClick="uploadImage"
+                    android:text="upload\n image"
+                    android:textSize="9sp"
+                    android:textColor="#FFFFC2E9" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
+
+                <Button
+                    android:id="@+id/button8"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="60"
+                    android:background="#FF3C7F"
+                    android:onClick="uploadPDF"
+                    android:text="upload Ticket PDF"
+                    android:textSize="12sp"
+
+                    android:textColor="#FFFFC2E9" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5" />
+
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5" />
+                android:layout_weight="3" />
 
             <LinearLayout
                 android:layout_width="match_parent"

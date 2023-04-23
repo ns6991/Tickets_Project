@@ -41,12 +41,29 @@
                 android:layout_weight="5" />
 
             <TextView
+                android:id="@+id/categoryIn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="7"
+                android:text="TextView"
+                android:textColor="#930032"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3" />
+
+            <TextView
                 android:id="@+id/nameTvID"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032" />
+                android:textSize="16sp"
+                android:textColor="#930032"
+                android:textStyle="bold"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -59,7 +76,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032" />
+                android:textSize="16sp"
+                android:textColor="#930032"
+                android:textStyle="bold"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -72,7 +91,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032" />
+                android:textColor="#930032"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <Space
                 android:layout_width="match_parent"
@@ -95,8 +116,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="35"
+                    android:textSize="16sp"
                     android:text="TextView"
-                    android:textColor="#930032" />
+                    android:textColor="#930032"
+                    android:textStyle="bold"/>
 
                 <Space
                     android:layout_width="0dp"
@@ -108,8 +131,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="35"
+                    android:textSize="16sp"
                     android:text="TextView"
-                    android:textColor="#930032" />
+                    android:textColor="#930032"
+                    android:textStyle="bold"/>
 
                 <Space
                     android:layout_width="0dp"
@@ -128,7 +153,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:onClick="isAct"
-                android:text="Active" />
+                android:text="Active"
+                android:textColor="#930032"
+                android:textStyle="bold"/>
 
             <Space
                 android:layout_width="match_parent"

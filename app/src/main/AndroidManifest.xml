@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,16 +16,20 @@
         android:theme="@style/Theme.Tickets_Project"
         tools:targetApi="31">
         <activity
+            android:name=".PDF_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Image_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectPDF_Activity"
+            android:exported="false" />
+        <activity
             android:name=".TicketsManagerInformation"
             android:exported="false" />
         <activity
             android:name=".Manager_Activity"
-            android:exported="false" />
-        <activity
-            android:name=".CheckoutActivity"
-            android:exported="false"
-            android:label="@string/title_activity_checkout"
-            android:theme="@style/Theme.Tickets_Project" /> <!-- This element is required to enable Google Pay in your app. -->
+            android:exported="false" /> <!-- This element is required to enable Google Pay in your app. -->
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true" />

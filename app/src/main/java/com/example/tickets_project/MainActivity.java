@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
 
 
-    String[] sendInfo = new String[9];
+    String[] sendInfo = new String[10];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -310,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.exists()) {
-                                String[] info = new String[9];
+                                String[] info = new String[10];
                                 info[0] = documentSnapshot.getString("Name");
                                 info[1] = documentSnapshot.getString("Place");
                                 info[2] = documentSnapshot.getString("Date");
@@ -320,6 +320,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 info[6] = documentSnapshot.getString("OwnerEmail");
                                 info[7] = documentSnapshot.getString("UploadID");
                                 info[8] = documentSnapshot.getString("Active");
+                                info[9] = documentSnapshot.getString("ManagerConfirm");
+
 
                                 saveData(info);
 

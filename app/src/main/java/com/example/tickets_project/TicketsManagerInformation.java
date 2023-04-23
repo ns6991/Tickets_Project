@@ -37,7 +37,7 @@ import java.util.Map;
 public class TicketsManagerInformation extends AppCompatActivity {
 
     Intent si,gi;
-    TextView name,place,date_time,price,amount;
+    TextView name,place,date_time,price,amount , category;
 
     ImageView imageView;
     String[] info;
@@ -61,17 +61,22 @@ public class TicketsManagerInformation extends AppCompatActivity {
         price = findViewById(R.id.priceTvIDM);
         amount = findViewById(R.id.amountTVM);
         imageView = findViewById(R.id.imageViewMan);
+        category = findViewById(R.id.categoryIn2);
         adb = new AlertDialog.Builder(this);
 
         gi = getIntent();
         info = gi.getStringArrayExtra("TicketInfo");
         db = FirebaseFirestore.getInstance();
-        name.setText(info[0]);
-        place.setText(info[1]);
-        date_time.setText(info[2]);
-        price.setText(info[4]);
-        amount.setText(info[5]);
+
+
         imageID = info[7];
+
+        name.setText("Event Name: " + info[0]);
+        place.setText("Event place: " +info[1]);
+        date_time.setText("Event Date: " +info[2]);
+        category.setText("Event Category: " +info[3]);
+        price.setText("Tickets Price:\n" +info[4]);
+        amount.setText("Number of Tickets :\n"+info[5]);
 
 
         progressDialog = new ProgressDialog(TicketsManagerInformation.this);
@@ -80,7 +85,7 @@ public class TicketsManagerInformation extends AppCompatActivity {
         progressDialog.show();
         Toast.makeText(this, "imageID" +imageID, Toast.LENGTH_SHORT).show();
 
-        storageReference = FirebaseStorage.getInstance().getReference("uploads/" + imageID + ".jpg");
+        storageReference = FirebaseStorage.getInstance().getReference("uploadsImages/" + imageID + ".jpg");
         if(storageReference.equals(null)){
             imageView.setImageResource(R.drawable.ti);
         }
@@ -88,7 +93,15 @@ public class TicketsManagerInformation extends AppCompatActivity {
             Glide.with(TicketsManagerInformation.this)
                     .load(storageReference)
                     .into(imageView);
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    seeImage();
+                }
+            });
         }
+
 
 
 
@@ -128,7 +141,17 @@ public class TicketsManagerInformation extends AppCompatActivity {
 
     }
 
+    private void seeImage(){
+        si = new Intent(this, Image_Activity.class);
+        si.putExtra("TicketInfo", info );
+        si.putExtra("storageRef",("uploadsImages/" + imageID + ".jpg"));
+        si.putExtra("activity" , "informationMan");
+        startActivity(si);
+    }
     public void ticDoc(View view) {
+        si = new Intent(this, PDF_Activity.class);
+        si.putExtra("TicketInfo", info);
+        startActivity(si);
     }
 
     private Map<String,String> createMap(){
