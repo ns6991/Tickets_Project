@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Tickets_Project"
         tools:targetApi="31">
         <activity
+            android:name=".BuyTicket_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".AccountDetails"
+            android:exported="false" />
+        <activity
             android:name=".PDF_Activity"
             android:exported="false" />
         <activity

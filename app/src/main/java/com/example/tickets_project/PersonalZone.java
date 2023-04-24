@@ -198,48 +198,13 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void lastUpload(View view) {
-        db.collection("UserInfo").document(Email).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if(documentSnapshot.exists()){
-                            String s = documentSnapshot.getString("CanUploadMore");
-                            String s1 =documentSnapshot.getString("LastUpload");
-                            if(s1=="" || s ==""){
-                                adb.setTitle("you aren't upload post yet");
-                                adb.setMessage("you can upload now");
-                            }
-                            else{
-                                adb.setTitle("your last upload was on: " + s1);
-                                adb.setMessage("you can upload again on: " + s);
+    public void account(View view) {
+        Intent si = new Intent(PersonalZone.this, AccountDetails.class);
+        si.putExtra("Email",Email);
+        si.putExtra("code",2);
 
-                            }
+        startActivity(si);
 
-                            adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                }
-                            });
-                            ad = adb.create();
-                            ad.show();
-
-
-                        }
-                        else{
-                            Toast.makeText(PersonalZone.this, "doc doesn't exist", Toast.LENGTH_SHORT).show();
-
-                        }
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
     }
 
     public void back(View view) {

@@ -347,7 +347,12 @@ public class UploadTicket_Activity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode ==1 && resultCode == RESULT_OK && data != null && data.getData() != null){
             mImg = data.getData();
-            //send with intent to ;
+            if(mUploadImageTask != null && mUploadImageTask.isInProgress()){
+                Toast.makeText(this,"Upload in progress", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                uploadFile();
+            }
         }
     }
 
@@ -356,6 +361,7 @@ public class UploadTicket_Activity extends AppCompatActivity {
         in.setType("image/*");
         in.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(in,1);
+
     }
 
     private String getFileExtension(Uri uri){
@@ -413,12 +419,7 @@ public class UploadTicket_Activity extends AppCompatActivity {
     public void uploadImage(View view) {
         if(!ids.isEmpty()){
             openFiles();
-            if(mUploadImageTask != null && mUploadImageTask.isInProgress()){
-                Toast.makeText(this,"Upload in progress", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                uploadFile();
-            }
+
         }
         else{
             Toast.makeText(this,"please upload ticket pdf before.", Toast.LENGTH_SHORT).show();

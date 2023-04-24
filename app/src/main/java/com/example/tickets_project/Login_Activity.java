@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,7 @@ import java.util.Map;
 public class Login_Activity extends AppCompatActivity {
     Intent si;
     EditText email,password;
+    TextView forget, notRegistered;
     Button login,signin;
     FirebaseAuth mAuth;
     AlertDialog.Builder adb;
@@ -40,8 +42,30 @@ public class Login_Activity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.emailLI);
         password = (EditText) findViewById(R.id.passwordLI);
         login = (Button) findViewById(R.id.loginB);
-        signin = (Button) findViewById(R.id.signinB);
+
+
+        forget = findViewById(R.id.textView11);
+        notRegistered = findViewById(R.id.textView2);
+
+        forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                forgot();
+
+            }
+        });
+
+
+
+        notRegistered.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                register();
+            }
+        });
         mAuth.getInstance();
+
+
 
         //onclick login {loginUser()}
     }
@@ -78,7 +102,7 @@ public class Login_Activity extends AppCompatActivity {
         }
     }
 
-    public void register(View view) {
+    public void register() {
         si = new Intent(this, Signin_Activity.class);
         startActivity(si);
 
@@ -88,7 +112,7 @@ public class Login_Activity extends AppCompatActivity {
         loginUser();
     }
 
-    public void forgot(View view) {
+    public void forgot() {
         if(email.getText().toString().equals("")){
             adb.setTitle("please enter your email above in the right place :)");
             adb.setPositiveButton("Got it!", new DialogInterface.OnClickListener() {

@@ -73,8 +73,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="8"
                 android:background="#FF3C7F"
-                android:onClick="lastUpload"
-                android:text="WHEN CAN I UPLOAD AGAIN?"
+                android:onClick="account"
+                android:text="change my account details"
                 android:textColor="#FFFFC2E9"
                 android:textSize="14sp" />
 

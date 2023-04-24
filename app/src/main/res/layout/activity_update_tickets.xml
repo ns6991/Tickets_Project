@@ -106,7 +106,7 @@
                     android:layout_weight="40"
                     android:text="Tickets Price:\n"
                     android:textColor="#930032"
-                    android:textSize="14sp"
+                    android:textSize="10sp"
                     android:textStyle="bold"/>
 
                 <Space
@@ -121,7 +121,7 @@
                     android:layout_weight="40"
                     android:text="Number of Tickets :\n"
                     android:textColor="#930032"
-                    android:textSize="14sp"
+                    android:textSize="10sp"
                     android:textStyle="bold"/>
 
                 <Space
@@ -152,7 +152,7 @@
                     android:layout_weight="35"
                     android:text="TextView"
                     android:textColor="#930032"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"/>
 
                 <Space
@@ -167,7 +167,7 @@
                     android:layout_weight="35"
                     android:text="TextView"
                     android:textColor="#930032"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"/>
 
                 <Space

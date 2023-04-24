@@ -53,10 +53,11 @@ public class PDF_Activity extends AppCompatActivity {
 
         wv = findViewById(R.id.web2);
         wv.setWebViewClient(new WebViewClient());
+       // String s = "https://firebasestorage.googleapis.com/v0/b/tickets-project-8310d.appspot.com/o/uploadsPDF%2F5.pdf?alt=media&token=3d05dc9e-5098-4ace-bc6a-4c973110e67d";
 
         wv.getSettings().setSupportZoom(true);
         wv.getSettings().setJavaScriptEnabled(true);
-        wv.loadUrl( url);
+        wv.loadUrl( "https://drive.google.com/viewerng/viewer?embedded=true&url=" + url);
     }
 
     private void saveData(String s){url = s;}

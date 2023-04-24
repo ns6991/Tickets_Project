@@ -116,7 +116,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="35"
-                    android:textSize="16sp"
+                    android:textSize="10sp"
                     android:text="TextView"
                     android:textColor="#930032"
                     android:textStyle="bold"/>
@@ -131,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="35"
-                    android:textSize="16sp"
+                    android:textSize="10sp"
                     android:text="TextView"
                     android:textColor="#930032"
                     android:textStyle="bold"/>

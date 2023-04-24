@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#46FF87D3"
-    tools:context=".Signin_Activity">>
+
+    tools:context=".AccountDetails">
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,10 +36,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
-                android:text="SIGNIN"
+                android:text="Acount Details"
                 android:textAlignment="center"
                 android:textColor="#FF3C7F"
-                android:textSize="45sp"
+                android:textSize="40sp"
                 android:textStyle="bold" />
 
             <Space
@@ -45,13 +48,13 @@
                 android:layout_weight="5" />
 
             <EditText
-                android:id="@+id/emailSI"
+                android:id="@+id/snif"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
                 android:ems="10"
-                android:hint="email address"
-                android:inputType="textEmailAddress"
+                android:hint="branch number"
+                android:inputType="numberDecimal"
                 android:textSize="16sp" />
 
             <Space
@@ -60,13 +63,13 @@
                 android:layout_weight="5" />
 
             <EditText
-                android:id="@+id/passwordSI"
+                android:id="@+id/heshbon"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
                 android:ems="10"
-                android:hint="password"
-                android:inputType="textPassword"
+                android:hint="account number"
+                android:inputType="numberDecimal"
                 android:textSize="16sp" />
 
             <Space
@@ -75,47 +78,35 @@
                 android:layout_weight="5" />
 
             <Button
-                android:id="@+id/signinBT"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
                 android:background="#FF3C7F"
                 android:backgroundTint="#E80C0C"
-                android:onClick="register"
-                android:text="SIGNIN"
+                android:onClick="save"
+                android:text="Save"
                 android:textColor="#FFC2E9"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
-
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5" />
 
-            <LinearLayout
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="7"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textV"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="45"
-                    android:text="Have an account?"
-                    android:textColor="#FF3C7F"
-                    android:textSize="14sp" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5" />
+                android:background="#FF3C7F"
+                android:backgroundTint="#E80C0C"
+                android:onClick="back"
+                android:text="back"
+                android:textColor="#FFC2E9"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
 
 
-            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
@@ -129,4 +120,9 @@
             android:layout_height="match_parent"
             android:layout_weight="5" />
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

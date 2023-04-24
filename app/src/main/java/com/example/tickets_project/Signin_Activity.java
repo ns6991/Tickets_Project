@@ -1,5 +1,7 @@
 package com.example.tickets_project;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +13,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,7 +34,8 @@ import java.util.Map;
 
 public class Signin_Activity extends AppCompatActivity {
     EditText email,password;
-    Button login,signin;
+    Button signin;
+    TextView tv;
     FirebaseAuth mAuth;
     FirebaseUser user;
     AlertDialog.Builder adb;
@@ -42,11 +47,21 @@ public class Signin_Activity extends AppCompatActivity {
 
         email = (EditText) findViewById(R.id.emailSI);
         password = (EditText) findViewById(R.id.passwordSI);
-        login = (Button) findViewById(R.id.loginBT);
+        tv = findViewById(R.id.textV);
+
+
         signin = (Button) findViewById(R.id.signinBT);
 
         mAuth = FirebaseAuth.getInstance();
         adb = new AlertDialog.Builder(this);
+
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login();
+
+            }
+        });
 
 
     }
@@ -108,16 +123,20 @@ public class Signin_Activity extends AppCompatActivity {
                                     adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                            dialogInterface.dismiss();
+                                            Intent si = new Intent(Signin_Activity.this, AccountDetails.class);
+                                            si.putExtra("Email",email1);
+                                            si.putExtra("code",1);
+
+                                            startActivity(si);
 
 
                                         }
                                     });
                                     ad = adb.create();
                                     ad.show();
-                                    if(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
 
-                                        startActivity(new Intent(Signin_Activity.this, MainActivity.class));
+                                    if(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
+                                        Log.d(TAG,"verify");
 
                                     }
                                     else
@@ -147,7 +166,7 @@ public class Signin_Activity extends AppCompatActivity {
         createUser();
     }
 
-    public void login(View view) {
+    public void login() {
         startActivity(new Intent(this, Login_Activity.class));
     }
 }

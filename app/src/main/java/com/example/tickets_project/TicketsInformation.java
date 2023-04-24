@@ -54,6 +54,7 @@ public class TicketsInformation extends AppCompatActivity {
     String imageID;
     Switch aSwitch;
     FirebaseFirestore db;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
     StorageReference storageReference;
@@ -171,6 +172,14 @@ public class TicketsInformation extends AppCompatActivity {
     }
 
     public void payScreen(View view) {
+        si = new Intent(this, BuyTicket_Activity.class);
+        si.putExtra("Price", info[4]);
+        si.putExtra("EmailOwner", info[6]);
+        si.putExtra("EmailBuyer", mAuth.getCurrentUser().getEmail());
+        si.putExtra("PDF", info[7]);
+
+        startActivity(si);
+
     }
 
     private void updateAct(int code){

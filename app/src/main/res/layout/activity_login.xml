@@ -112,16 +112,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
 
-                <Button
-                    android:id="@+id/button7"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="50"
-                    android:background="#FF3C7F"
-                    android:onClick="forgot"
-                    android:text="Click here"
-                    android:textColor="#FFC2E9"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <Space
@@ -153,18 +143,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
-
-                <Button
-                    android:id="@+id/signinB"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="50"
-                    android:background="#FF3C7F"
-                    android:onClick="register"
-                    android:text="click here"
-                    android:textColor="#FFC2E9"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
 
                 <Space
                     android:layout_width="wrap_content"
