@@ -1,0 +1,454 @@
+@startuml
+class com.example.tickets_project.Constants {
++ {static} int PAYMENTS_ENVIRONMENT
++ {static} List<String> SUPPORTED_NETWORKS
++ {static} List<String> SUPPORTED_METHODS
++ {static} String COUNTRY_CODE
++ {static} String CURRENCY_CODE
++ {static} List<String> SHIPPING_SUPPORTED_COUNTRIES
++ {static} String PAYMENT_GATEWAY_TOKENIZATION_NAME
++ {static} HashMap<String,String> PAYMENT_GATEWAY_TOKENIZATION_PARAMETERS
++ {static} String DIRECT_TOKENIZATION_PUBLIC_KEY
++ {static} HashMap<String,String> DIRECT_TOKENIZATION_PARAMETERS
+}
+class com.example.tickets_project.UpdateTickets {
+~ Intent si
+~ EditText amount
+~ TextView name
+~ Switch active
+~ ImageView iv
+~ String id
+~ String active1
+~ String email1
+~ FirebaseFirestore db
+~ StorageReference storageReference
+~ ProgressDialog progressDialog
+~ String[] info
+# void onCreate(Bundle)
++ void back(View)
+- boolean checkValues()
++ void done(View)
++ void active(View)
++ void uploadPDF(View)
+- void sendToConfirm()
+}
+class com.example.tickets_project.WishList {
+~ EditText eventName
+~ Intent si
+~ Spinner cat
+~ String category
+~ String[] categories
+~ ArrayAdapter<String> adp
+~ FirebaseFirestore db
+~ List<String> ids
+~ SimpleDateFormat format
+~ SimpleDateFormat format2
+# void onCreate(Bundle)
+- boolean checkValues()
+- void saveData(String)
++ void setUploadID()
+- Map<String,String> createMap()
+- void addUserWish()
+- void notification()
++ void uploadRequest(View)
++ void back(View)
++ void onItemSelected(AdapterView<?>,View,int,long)
++ void onNothingSelected(AdapterView<?>)
+}
+class com.example.tickets_project.Terms_activity {
+~ TextView tv
+~ String s
+# void onCreate(Bundle)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+}
+class com.example.tickets_project.Signin_Activity {
+~ EditText email
+~ TextView tv
+~ FirebaseAuth mAuth
+~ FirebaseUser user
+~ AlertDialog.Builder adb
+~ ImageView imageView
+~ AlertDialog ad
+~ int code
+~ String password1
+~ String email1
+# void onCreate(Bundle)
+- Map<String,String> createMap()
+- void updateInfo()
+- void createUser()
++ void register(View)
+- void loginn()
++ void login()
+- boolean checkEmail(String)
+}
+class com.example.tickets_project.CustomAdapter {
+~ Context context
+~ List<List<String>> eventsNames
+~ LayoutInflater inflter
++ int getCount()
++ String getItem(int)
++ long getItemId(int)
++ View getView(int,View,ViewGroup)
+}
+class com.example.tickets_project.PDF_Activity {
+~ WebView wv
+~ Intent gi
+~ String[] info
+~ String pdfID
+~ String url
+~ StorageReference reference
+~ PDFView pdfView
+~ int code
+~ FirebaseAuth mAuth
+~ String Email
+# void onCreate(Bundle)
++ void back(View)
+}
+class com.example.tickets_project.UploadTicket_Activity {
+~ String[] categories
+~ String[] amountN
+~ List<String> ids
+~ EditText Name
+~ Spinner Category
+~ String cat
+~ Intent si
+~ String emailOfOwner
+~ SimpleDateFormat format
+~ SimpleDateFormat format2
+~ Uri mImg
+~ StorageReference mStorageRef
+~ DatabaseReference mDatabaseRef
+~ StorageTask mUploadImageTask
+~ ProgressBar progressBar
+~ FirebaseFirestore db
+~ AlertDialog.Builder adb
+~ AlertDialog ad
+~ ArrayAdapter<String> adp
+~ String upldID
+# void onCreate(Bundle)
++ void ret(View)
+- void updateUserInfo(String,String,String)
+- boolean checkValues()
+- boolean checkTime(String)
+- Map<String,String> createMap()
++ void uploadPost(View)
+# void onActivityResult(int,int,Intent)
+- void openFiles()
+- String getFileExtension(Uri)
+- void uploadFile()
++ void uploadImage(View)
+- boolean relevant(String)
+- void sendMassage(String)
+- void checkWishList()
+}
+class com.example.tickets_project.MainActivity {
+~ String[] categories
+~ ArrayAdapter<String> adpSpinner
+~ CustomAdapter adp
+~ List<List<String>> eventsNames
+~ List<String> tmp
+~ ImageView button
+~ List<List<String>> eventsNames1
+~ List<String[]> active
+~ List<String[]> notactive
+~ AlertDialog.Builder adb
+~ AlertDialog ad
+~ Spinner spinner
+~ FirebaseAuth mAuth
+~ Intent gi
+~ ListView lv
+~ FirebaseFirestore db
+~ FirebaseUser user
+~ String email
+~ SimpleDateFormat format
+~ String[] phones
+~ String[] sendInfo
+~ String[] ticketsOfOwnerNotActive
+~ String[] ticketsOfOwnerActive
+# void onCreate(Bundle)
+# void onStart()
+# void onResume()
+- void searchData(String)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+- void loadToList()
+- void saveData(String[])
++ void onItemClick(AdapterView<?>,View,int,long)
+- void removePostsByDate()
+- void removePostsByDateWish()
+- void savePhone(String)
++ void getPhone()
++ void uploadPost(View)
+- void uploadp(String)
+- void wishList()
++ void requestTicketsBT(View)
++ void onItemSelected(AdapterView<?>,View,int,long)
++ void onNothingSelected(AdapterView<?>)
+}
+class com.example.tickets_project.Notification_receiver {
++ void onReceive(Context,Intent)
+}
+class com.example.tickets_project.Manager_Activity {
+~ Intent si
+~ ListView listView1
+~ FirebaseAuth mAuth
+~ FirebaseFirestore db
+~ List<String> tmp
+~ List<List<String>> eventsNames1
+~ String[] sendInfo
+~ CustomAdapter adp
+~ AlertDialog.Builder adb
+~ AlertDialog ad
+# void onCreate(Bundle)
+- void removePostsByDate()
+- void loadToList()
+- void nothingToCheck()
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
++ void upload(View)
++ void back(View)
+- void saveData(String[])
++ void onItemClick(AdapterView<?>,View,int,long)
+}
+class com.example.tickets_project.MyTicketInfo_Activity {
+~ TextView name
+~ Intent si
+~ String[] info
+~ String email
+# void onCreate(Bundle)
++ void back(View)
++ void seeTicket(View)
+}
+class com.example.tickets_project.util.PaymentsUtil {
++ {static} BigDecimal CENTS_IN_A_UNIT
+- {static} JSONObject getBaseRequest()
++ {static} PaymentsClient createPaymentsClient(Context)
+- {static} JSONObject getGatewayTokenizationSpecification()
+- {static} JSONObject getDirectTokenizationSpecification()
+- {static} JSONArray getAllowedCardNetworks()
+- {static} JSONArray getAllowedCardAuthMethods()
+- {static} JSONObject getBaseCardPaymentMethod()
+- {static} JSONObject getCardPaymentMethod()
++ {static} JSONObject getIsReadyToPayRequest()
+- {static} JSONObject getTransactionInfo(String)
+- {static} JSONObject getMerchantInfo()
++ {static} JSONObject getPaymentDataRequest(long)
++ {static} String centsToString(long)
+}
+class com.example.tickets_project.myTickets_Activity {
+~ FirebaseFirestore db
+~ Intent gi
+~ String email
+~ ListView lv
+~ List<String[]> Tickets
+~ CustomAdapter2 adp
+# void onCreate(Bundle)
++ void back(View)
++ void onItemClick(AdapterView<?>,View,int,long)
+- void removePostsByDate()
+- List<String[]> loadToList()
+}
+class com.example.tickets_project.viewmodel.CheckoutViewModel {
+- PaymentsClient paymentsClient
+- MutableLiveData<Boolean> _canUseGooglePay
++ LiveData<Boolean> canUseGooglePay
+- void fetchCanUseGooglePay()
++ Task<PaymentData> getLoadPaymentDataTask(long)
+}
+class com.example.tickets_project.Login_Activity {
+~ Intent si
+~ EditText email
+~ TextView forget
+~ ImageView login
+~ FirebaseAuth mAuth
+~ AlertDialog.Builder adb
+~ AlertDialog ad
+~ int flag
+# void onCreate(Bundle)
+# void onResume()
+- void loginUser()
++ void register()
++ void login(View)
++ void forgot()
+}
+class com.example.tickets_project.putPDF {
++ String name
++ String url
++ String uri
++ String getName()
++ void setName(String)
++ String getUrl()
++ void setUrl(String)
+}
+class com.example.tickets_project.TicketsManagerInformation {
+~ Intent si
+~ TextView name
+~ ImageView imageView
+~ String[] info
+~ String imageID
+~ FirebaseFirestore db
+~ StorageReference storageReference
+~ ProgressDialog progressDialog
+~ AlertDialog.Builder adb
+~ AlertDialog ad
+~ String notes
+# void onCreate(Bundle)
++ void ticDoc(View)
+- Map<String,String> createMap()
+- void sendMassage(String,String)
++ void Confirm(View)
++ void Canceled(View)
++ void back(View)
+}
+class com.example.tickets_project.PersonalZone {
+~ FirebaseFirestore db
+~ String Email
+~ List<String[]> retA
+~ List<String[]> retNA
+~ TextView tv
+~ ListView lv
+~ Switch aSwitch
+~ Intent si
+~ AlertDialog.Builder adb
+~ AlertDialog ad
+~ FirebaseAuth mAuth
+~ CustomAdapter2 adp
+~ Intent gi
+~ SimpleDateFormat format
+# void onCreate(Bundle)
+# void onResume()
++ List<String[]> activeOrNot(int)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
++ void onItemClick(AdapterView<?>,View,int,long)
++ void back(View)
++ void upload(View)
+- void uploadp()
++ void active(View)
++ void myTickets(View)
+}
+class com.example.tickets_project.SelectPDF_Activity {
+~ StorageReference mStorageRefP
+~ DatabaseReference mDatabaseRefP
+~ Intent gi
+~ String pdfID
+~ String url
+~ String email
+~ List<String> ids
+~ FirebaseFirestore db
+~ int code
+~ String updateId
+~ PDFView pdfView
+~ String[] info
+~ String email1
+~ String test
+# void onCreate(Bundle)
+- void selectPDF()
+# void onActivityResult(int,int,Intent)
+- String uploadPDFFile(Uri)
++ void openFiles(View)
++ void back(View)
+- void saveData1(String)
++ void setUploadID()
++ void next(View)
+}
+class com.example.tickets_project.BuyTicket_Activity {
+~ TextView price
+~ Intent si
+~ String pr
+~ String pdfUrl
+~ FirebaseFirestore db
+- PaymentsClient paymentsClient
+~ Button googlePayButton
+- JSONObject transactionInfo
+- JSONObject tokenizationSpecification
+- JSONObject cardPaymentMethod
+- JSONObject merchantInfo
+- JSONObject paymentDataRequestJson
+~ PaymentDataRequest paymentDataRequest
+- int LOAD_PAYMENT_DATA_REQUEST_CODE
+~ ImageView buy
+~ String[] info
+- JSONObject baseCardPaymentMethod
+- JSONObject googlePayBaseConfiguration
+# void onCreate(Bundle)
+- void sendMassage()
+- void saveData(String)
+- void noti()
+- void createNotiChannel()
++ void buy2()
++ void back(View)
+- PaymentsClient createPaymentsClient(Context)
+- void setGooglePayAvailable(Boolean)
+- void requestPayment()
++ void onActivityResult(int,int,Intent)
+- void handlePaymentSuccess(PaymentData)
+- void addToTable()
+- Map<String,String> createMap()
+- void removeFromTable()
+}
+class com.example.tickets_project.CustomAdapter2 {
+~ Context context
+~ List<String[]> eventsNames
+~ LayoutInflater inflter
++ int getCount()
++ String[] getItem(int)
++ long getItemId(int)
++ View getView(int,View,ViewGroup)
+}
+class com.example.tickets_project.TicketsInformation {
+~ Intent si
+~ TextView name
+~ ImageView imageView
+~ String[] info
+~ String imageID
+~ Switch aSwitch
+~ FirebaseFirestore db
+~ String ownerPhone
+~ FirebaseAuth mAuth
+~ StorageReference storageReference
+~ ProgressDialog progressDialog
+# void onCreate(Bundle)
++ void back(View)
++ void payScreen(View)
+- void updateAct(int)
++ void isAct(View)
+}
+class com.example.tickets_project.Upload {
+- String mName
+- String mImgUrl
++ String getmImgUrl()
++ String getmName()
++ void setmImgUrl(String)
++ void setmName(String)
+}
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.UpdateTickets
+com.example.tickets_project.OnItemSelectedListener <|.. com.example.tickets_project.WishList
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.WishList
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.Terms_activity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.Signin_Activity
+android.widget.BaseAdapter <|-- com.example.tickets_project.CustomAdapter
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.PDF_Activity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.UploadTicket_Activity
+com.example.tickets_project.OnItemClickListener <|.. com.example.tickets_project.MainActivity
+com.example.tickets_project.OnItemSelectedListener <|.. com.example.tickets_project.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.MainActivity
+android.content.BroadcastReceiver <|-- com.example.tickets_project.Notification_receiver
+com.example.tickets_project.OnItemClickListener <|.. com.example.tickets_project.Manager_Activity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.Manager_Activity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.MyTicketInfo_Activity
+com.example.tickets_project.OnItemClickListener <|.. com.example.tickets_project.myTickets_Activity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.myTickets_Activity
+androidx.lifecycle.AndroidViewModel <|-- com.example.tickets_project.viewmodel.CheckoutViewModel
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.Login_Activity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.TicketsManagerInformation
+com.example.tickets_project.OnItemClickListener <|.. com.example.tickets_project.PersonalZone
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.PersonalZone
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.SelectPDF_Activity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.BuyTicket_Activity
+android.widget.BaseAdapter <|-- com.example.tickets_project.CustomAdapter2
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tickets_project.TicketsInformation
+@enduml
