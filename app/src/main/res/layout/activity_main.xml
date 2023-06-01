@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46FF87D3"
+    android:background="#FDECEC"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -32,7 +32,10 @@
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3"
+                android:layout_weight="4"
+                android:textColor="#820659"
+                android:textSize="13sp"
+                android:textStyle="bold"
                 android:text="CATEGORIES" />
 
             <Spinner
@@ -40,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="8"
-                android:backgroundTint="#FF659A" />
+                android:backgroundTint="#820659" />
 
             <Space
                 android:layout_width="match_parent"
@@ -69,48 +72,28 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
 
-                <Button
+                <ImageView
                     android:id="@+id/upPostID"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="51dp"
                     android:layout_weight="24"
-                    android:background="#FF3C7F"
                     android:onClick="uploadPost"
-                    android:text="UPLOAD "
-                    android:textColor="#FFC2E9"
-                    android:textSize="12sp" />
+                    android:src="@drawable/uploaspost" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
 
-                <Button
+                <ImageView
                     android:id="@+id/requestTicket"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="26"
-                    android:background="#FF3C7F"
                     android:onClick="requestTicketsBT"
-                    android:text="request ticket"
-                    android:textColor="#FFC2E9"
-                    android:textSize="10sp" />
+                    android:src="@drawable/reqpage" />
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5" />
 
-                <Button
-                    android:id="@+id/personalID"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="24"
-                    android:background="#FF3C7F"
-                    android:onClick="personalZone"
-                    android:text="PERSONAL  ZONE"
-                    android:textColor="#FFC2E9"
-                    android:textSize="8sp" />
 
                 <Space
                     android:layout_width="0dp"

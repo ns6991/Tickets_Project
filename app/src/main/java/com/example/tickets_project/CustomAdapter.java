@@ -49,6 +49,7 @@ public class CustomAdapter  extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
         view = inflter.inflate(R.layout.adp_lv, null);
         TextView title = (TextView) view.findViewById(R.id.titleTextView);
         TextView sub = (TextView) view.findViewById(R.id.subtitleTextView);

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46FF87D3"
+    android:background="#FDECEC"
     tools:context=".TicketsManagerInformation">
 
 
@@ -48,7 +48,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032"
+                android:textColor="#77010E"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -63,7 +63,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032"
+                android:textColor="#77010E"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -78,7 +78,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032"
+                android:textColor="#77010E"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -93,65 +93,37 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032"
+                android:textColor="#77010E"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5" />
-
-            <LinearLayout
+                android:layout_weight="3" />
+            <TextView
+                android:id="@+id/price_amountM"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="7"
-                android:orientation="horizontal">
+                android:text="TextView"
+                android:textColor="#77010E"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5" />
 
-                <TextView
-                    android:id="@+id/priceTvIDM"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="35"
-                    android:text="TextView"
-                    android:textColor="#930032"
-                    android:textSize="10sp"
-                    android:textStyle="bold"/>
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="20" />
-
-                <TextView
-                    android:id="@+id/amountTVM"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="35"
-                    android:text="TextView"
-                    android:textColor="#930032"
-                    android:textSize="10sp"
-                    android:textStyle="bold"/>
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5" />
-            </LinearLayout>
-            <Button
+            <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5"
-                android:background="#FF3C7F"
-                android:backgroundTint="#FF3C7F"
+                android:layout_weight="3" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="7"
                 android:onClick="ticDoc"
-                android:text="See Ticket doc"
-                android:textColor="#FFFFC2E9" />
+                android:src="@drawable/seepdf" />
 
             <Space
                 android:layout_width="match_parent"
@@ -169,45 +141,39 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
 
-                <Button
+                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="30"
-                    android:background="#FF3C7F"
-                    android:backgroundTint="#FF3C7F"
+                    android:src="@drawable/confirm"
                     android:onClick="Confirm"
-                    android:text="Confirm ticket"
-                    android:textColor="#FFFFC2E9" />
+                     />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
 
-                <Button
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="30"
-                android:background="#FF3C7F"
-                android:backgroundTint="#FF3C7F"
-                android:onClick="Canceled"
-                android:text="Cancel a ticket"
-                android:textColor="#FFFFC2E9" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:src="@drawable/cancel"
+                    android:onClick="Canceled"
+                    />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
 
-                <Button
+                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="20"
-                    android:background="#FF3C7F"
+                    android:src="@drawable/back"
                     android:onClick="back"
-                    android:text="back"
-                    android:textColor="#FFFFC2E9"
-                    android:textSize="12sp" />
+                    />
 
                 <Space
                     android:layout_width="0dp"

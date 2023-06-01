@@ -1,12 +1,16 @@
 package com.example.tickets_project;
 
+import android.net.Uri;
+
 public class putPDF {
     public String name;
     public String url;
+    public  String uri;
 
-    public putPDF(String name, String url){
+    public putPDF(String name, String url, String uri){
         this.name = name;
         this.url =url;
+        this.uri = uri;
     }
 
     public String getName(){

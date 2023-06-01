@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46FF87D3"
+    android:background="#FDECEC"
     tools:context=".Signin_Activity">>
 
     <LinearLayout
@@ -35,8 +35,8 @@
                 android:layout_weight="10"
                 android:text="SIGNIN"
                 android:textAlignment="center"
-                android:textColor="#FF3C7F"
-                android:textSize="45sp"
+                android:textColor="#820659"
+                android:textSize="35sp"
                 android:textStyle="bold" />
 
             <Space
@@ -59,14 +59,36 @@
                 android:layout_height="0dp"
                 android:layout_weight="5" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                app:passwordToggleEnabled="true">
+
+                <EditText
+                    android:id="@+id/passwordSI"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:hint="password"
+                    android:inputType="textPassword"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5" />
+
             <EditText
-                android:id="@+id/passwordSI"
+                android:id="@+id/phone4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
                 android:ems="10"
-                android:hint="password"
-                android:inputType="textPassword"
+                android:hint="phone number"
+                android:inputType="phone"
                 android:textSize="16sp" />
 
             <Space
@@ -74,18 +96,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="5" />
 
-            <Button
+            <ImageView
                 android:id="@+id/signinBT"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
-                android:background="#FF3C7F"
-                android:backgroundTint="#E80C0C"
+                android:src="@drawable/signin"
                 android:onClick="register"
-                android:text="SIGNIN"
-                android:textColor="#FFC2E9"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                 />
 
 
             <Space
@@ -96,7 +114,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="7"
+                android:layout_weight="15"
                 android:orientation="horizontal">
 
                 <TextView
@@ -105,7 +123,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="45"
                     android:text="Have an account?"
-                    android:textColor="#FF3C7F"
+                    android:textColor="#77010E"
                     android:textSize="14sp" />
 
                 <Space

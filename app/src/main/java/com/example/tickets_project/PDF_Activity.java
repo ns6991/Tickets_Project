@@ -1,19 +1,36 @@
 package com.example.tickets_project;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
+import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+//import com.github.barteksc.pdfviewer.PDFView;
+
+
+import com.github.barteksc.pdfviewer.PDFView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class PDF_Activity extends AppCompatActivity {
 
@@ -23,7 +40,11 @@ public class PDF_Activity extends AppCompatActivity {
 
     String pdfID;
     String url;
-    DatabaseReference reference;
+    StorageReference reference;
+    PDFView pdfView;
+    int code;
+    FirebaseAuth mAuth;
+    String Email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,41 +52,70 @@ public class PDF_Activity extends AppCompatActivity {
         url = "";
 
         gi = getIntent();
-        info = gi.getStringArrayExtra("TicketInfo");
-        pdfID = info[7];
+        code = gi.getIntExtra("code",0);
+        //info = gi.getStringArrayExtra("TicketInfo");
+        if(code==0){
+            info = gi.getStringArrayExtra("TicketInfo");
+            pdfID = info[7];
+        }
+        else {
+            pdfID = gi.getStringExtra("upId2");
+        }
+        mAuth = FirebaseAuth.getInstance();
 
-        reference = FirebaseDatabase.getInstance().getReference().child("uploadsPDF");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String s = snapshot.child(pdfID).child("url").getValue().toString();
-                saveData(s);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        // Request permissions at runtime
 
 
 
-        wv = findViewById(R.id.web2);
-        wv.setWebViewClient(new WebViewClient());
-       // String s = "https://firebasestorage.googleapis.com/v0/b/tickets-project-8310d.appspot.com/o/uploadsPDF%2F5.pdf?alt=media&token=3d05dc9e-5098-4ace-bc6a-4c973110e67d";
 
-        wv.getSettings().setSupportZoom(true);
-        wv.getSettings().setJavaScriptEnabled(true);
-        wv.loadUrl( "https://drive.google.com/viewerng/viewer?embedded=true&url=" + url);
+        Email = mAuth.getCurrentUser().getEmail();
+
+        pdfView = findViewById(R.id.pdfView);
+
+
+        FirebaseFirestore.getInstance().collection("ID collection").document(pdfID)
+                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Uri uri = Uri.parse(documentSnapshot.getString("imgUri"));
+
+                        pdfView.fromUri(uri)
+                                .enableSwipe(true) // allows to block changing pages using swipe
+                                .swipeHorizontal(false)
+                                .enableDoubletap(true)
+                                .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
+                                .enableAntialiasing(true) // improve rendering a little bit on low-res screens
+                                // spacing between pages in dp. To define spacing color, set view background
+                                .spacing(0)
+                                .load();
+                    }
+                });
+
+
     }
 
-    private void saveData(String s){url = s;}
+
+
+
+
+
 
     public void back(View view) {
+        /**
+         * Back to the previous page
+         */
+        Intent si1 = new Intent(this, MyTicketInfo_Activity.class);
         si = new Intent(this, TicketsManagerInformation.class);
         si.putExtra("TicketInfo", info);
-        startActivity(si);
+        si1.putExtra("TicketInfo", info);
+        si1.putExtra("Email" , Email);
+        if(code==1){
+            startActivity(si1);
+        }
+        else{
+            startActivity(si);
+        }
+
 
     }
 }

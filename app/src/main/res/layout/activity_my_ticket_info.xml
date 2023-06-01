@@ -4,11 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46FF87D3"
+    android:background="#FDECEC"
 
-    tools:context=".AccountDetails">
-
-
+    tools:context=".MyTicketInfo_Activity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,81 +27,69 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="15" />
+                android:layout_weight="5" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:onClick="seeTicket"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:src="@drawable/seepdf" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5" />
+
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:text="Acount Details"
-                android:textAlignment="center"
-                android:textColor="#FF3C7F"
-                android:textSize="40sp"
-                android:textStyle="bold" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5" />
-
-            <EditText
-                android:id="@+id/snif"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:ems="10"
-                android:hint="branch number"
-                android:inputType="numberDecimal"
-                android:textSize="16sp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5" />
-
-            <EditText
-                android:id="@+id/heshbon"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:ems="10"
-                android:hint="account number"
-                android:inputType="numberDecimal"
-                android:textSize="16sp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:background="#FF3C7F"
-                android:backgroundTint="#E80C0C"
-                android:onClick="save"
-                android:text="Save"
-                android:textColor="#FFC2E9"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5" />
-
-            <Button
+                android:id="@+id/nameTvID11"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="7"
-                android:background="#FF3C7F"
-                android:backgroundTint="#E80C0C"
-                android:onClick="back"
-                android:text="back"
-                android:textColor="#FFC2E9"
-                android:textSize="18sp"
+                android:text="TextView"
+                android:textSize="14sp"
+                android:textColor="#77010E"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/placeTvID11"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="7"
+                android:text="TextView"
+                android:textSize="14sp"
+                android:textColor="#77010E"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/dateTimeID11"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="7"
+                android:text="TextView"
+                android:textColor="#77010E"
+                android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/price_amount11"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="7"
+                android:text="TextView"
+                android:textColor="#77010E"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:onClick="back"
+                android:src="@drawable/back" />
 
 
 
@@ -111,7 +97,7 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="20" />
+                android:layout_weight="5" />
 
         </LinearLayout>
 
@@ -121,8 +107,4 @@
             android:layout_weight="5" />
     </LinearLayout>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-

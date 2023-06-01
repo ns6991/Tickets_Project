@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FDECEC"
+
     tools:context=".PDF_Activity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5" />
@@ -21,39 +23,38 @@
             android:layout_weight="90"
             android:orientation="vertical">
 
-            <Space
+
+
+            <android.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5" />
 
-            <WebView
-                android:id="@+id/web2"
+            <com.github.barteksc.pdfviewer.PDFView
+                android:id="@+id/pdfView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="75"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                android:layout_weight="75"/>
 
-            <Space
+            <android.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5" />
 
-            <Button
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
-                android:text="Back"
-                android:textColor="#FFFFC2E9"
-                android:textSize="20sp"
+                android:src="@drawable/back"
                 android:onClick="back"/>
 
-            <Space
+            <android.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5" />
         </LinearLayout>
 
-        <Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5" />

@@ -12,8 +12,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.telephony.SmsManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +52,8 @@ public class TicketsManagerInformation extends AppCompatActivity {
 
     AlertDialog.Builder adb;
     AlertDialog ad;
+    String notes;
+
 
 
     @Override
@@ -58,14 +64,15 @@ public class TicketsManagerInformation extends AppCompatActivity {
         name = findViewById(R.id.nameTvIDM);
         place = findViewById(R.id.placeTvIDM);
         date_time = findViewById(R.id.dateTimeIDM);
-        price = findViewById(R.id.priceTvIDM);
-        amount = findViewById(R.id.amountTVM);
+        price = findViewById(R.id.price_amountM);
+
         imageView = findViewById(R.id.imageViewMan);
         category = findViewById(R.id.categoryIn2);
         adb = new AlertDialog.Builder(this);
 
         gi = getIntent();
         info = gi.getStringArrayExtra("TicketInfo");
+
         db = FirebaseFirestore.getInstance();
 
 
@@ -75,8 +82,8 @@ public class TicketsManagerInformation extends AppCompatActivity {
         place.setText("Event place: " +info[1]);
         date_time.setText("Event Date: " +info[2]);
         category.setText("Event Category: " +info[3]);
-        price.setText("Tickets Price:\n" +info[4]);
-        amount.setText("Number of Tickets :\n"+info[5]);
+        price.setText(info[4] + "₪ for " + info[5] + " tickets");
+
 
 
         progressDialog = new ProgressDialog(TicketsManagerInformation.this);
@@ -94,12 +101,7 @@ public class TicketsManagerInformation extends AppCompatActivity {
                     .load(storageReference)
                     .into(imageView);
 
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    seeImage();
-                }
-            });
+
         }
 
 
@@ -141,20 +143,24 @@ public class TicketsManagerInformation extends AppCompatActivity {
 
     }
 
-    private void seeImage(){
-        si = new Intent(this, Image_Activity.class);
-        si.putExtra("TicketInfo", info );
-        si.putExtra("storageRef",("uploadsImages/" + imageID + ".jpg"));
-        si.putExtra("activity" , "informationMan");
-        startActivity(si);
-    }
+
     public void ticDoc(View view) {
+        /**
+         * Moves to the screen where you see the card document
+         */
+
         si = new Intent(this, PDF_Activity.class);
         si.putExtra("TicketInfo", info);
+        si.putExtra("code", 0);
         startActivity(si);
     }
 
     private Map<String,String> createMap(){
+        /**
+         * Saves the card information in the data structure
+         * @return Map<String,String> with information about each ticket
+         */
+
         Map<String,String> one= new HashMap<>();
 
         one.put("Name",info[0]);
@@ -167,11 +173,30 @@ public class TicketsManagerInformation extends AppCompatActivity {
         one.put("UploadID",info[7]);
         one.put("Active",info[8]);
         one.put("ManagerConfirm","1");
+        one.put("phone",info[10]);
         return one;
 
     }
+    private void sendMassage(String p, String s){
+        /**
+         * The function sends a message to the user
+         *  @param    String phone number of user.
+         *  @param    String text of massage.
+         */
+
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(p,null,s,null,null);
+
+    }
+
 
     public void Confirm(View view) {
+        /**
+         * The function approves the ticket, adds it to the database of cards available to the user,
+         * deletes it from the database of cards for testing, and displays an appropriate confirmation message.
+         *  send explanation in a message to the user
+         */
+
 
         adb.setTitle("Are you sure that this ticket is approved?");
         adb.setPositiveButton("YES!", new DialogInterface.OnClickListener() {
@@ -184,6 +209,8 @@ public class TicketsManagerInformation extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(TicketsManagerInformation.this, "saved successfully", Toast.LENGTH_SHORT).show();
+                                String sm = "your ticket uploaded successfully!";
+                                sendMassage(info[10],sm);
 
                             }
                         })
@@ -227,8 +254,18 @@ public class TicketsManagerInformation extends AppCompatActivity {
 
     }
 
+
     public void Canceled(View view) {
+        /**
+         * The function cancels the card, deletes it from the card database for checking
+         * and displays an appropriate confirmation message with the option
+         * to write the reason for the cancellation and send the explanation in a message to the user
+         */
+
         adb.setTitle("Are you sure that this ticket is Not approved?");
+        final EditText input = new EditText(TicketsManagerInformation.this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        adb.setView(input);
         adb.setPositiveButton("YES!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -236,6 +273,10 @@ public class TicketsManagerInformation extends AppCompatActivity {
                         .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
+
+                                notes = input.getText().toString();
+                                String sm = "There was a problem with the ticket details " + notes + " please try again";
+                                sendMassage(info[10],sm);
                                 Toast.makeText(TicketsManagerInformation.this, "delete successfully", Toast.LENGTH_SHORT).show();
 
                             }
@@ -287,6 +328,10 @@ public class TicketsManagerInformation extends AppCompatActivity {
     }
 
     public void back(View view) {
+        /**
+         * Returning to the admin page
+         */
+
         si = new Intent(this, Manager_Activity.class);
 
         startActivity(si);

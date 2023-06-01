@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46FF87D3"
+    android:background="#FDECEC"
     tools:context=".PersonalZone">
 
     <LinearLayout
@@ -34,8 +34,17 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#FF3C7F"
+                android:textColor="#77010E"
                 android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_weight="7"
+                android:onClick="myTickets"
+
+                android:layout_height="0dp"
+                app:srcCompat="@drawable/my_tickets" />
 
             <Space
                 android:layout_width="match_parent"
@@ -49,7 +58,7 @@
                 android:layout_weight="7"
                 android:onClick="active"
                 android:text="ACTIVE"
-                android:textColor="#FF3C7F" />
+                android:textColor="#77010E" />
 
             <Space
                 android:layout_width="match_parent"
@@ -67,26 +76,11 @@
                 android:layout_height="0dp"
                 android:layout_weight="5" />
 
-            <Button
-                android:id="@+id/lastUpload"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="8"
-                android:background="#FF3C7F"
-                android:onClick="account"
-                android:text="change my account details"
-                android:textColor="#FFFFC2E9"
-                android:textSize="14sp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="7" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="10"
+                android:layout_weight="8"
                 android:orientation="horizontal">
 
                 <Space
@@ -94,32 +88,26 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
 
-                <Button
+                <ImageView
                     android:id="@+id/uploadBT"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="60"
-                    android:background="#FF3C7F"
                     android:onClick="upload"
-                    android:text="upload"
-                    android:textColor="#FFFFC2E9"
-                    android:textSize="16sp" />
+                    android:src="@drawable/uploaspost" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10" />
 
-                <Button
+                <ImageView
                     android:id="@+id/returnBT"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="20"
-                    android:background="#FF3C7F"
                     android:onClick="back"
-                    android:text="back"
-                    android:textColor="#FFFFC2E9"
-                    android:textSize="12sp" />
+                    android:src="@drawable/back" />
 
                 <Space
                     android:layout_width="0dp"

@@ -19,6 +19,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tickets_project.databinding.ActivityMyTicketsBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,11 +36,14 @@ import java.util.List;
 
 public class PersonalZone extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore db;
 
-    String Email;
+
+    String Email ="";
     List<String[]> retA =new ArrayList<String[]>();
     List<String[]> retNA =new ArrayList<String[]>();
+
+
 
 
     TextView tv;
@@ -59,7 +63,12 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_zone);
         gi = getIntent();
-        Email = gi.getStringExtra("Email");
+        db = FirebaseFirestore.getInstance();
+
+        mAuth = FirebaseAuth.getInstance();
+
+        Email = mAuth.getCurrentUser().getEmail();
+
        // adp = new CustomAdapter2(getApplicationContext(), uploadsActive);
 
 
@@ -72,7 +81,6 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
         lv.setAdapter(adp);
         adb = new AlertDialog.Builder(this);
         aSwitch.setChecked(true);
-        mAuth = FirebaseAuth.getInstance();
         activeOrNot(1);
 
 
@@ -85,16 +93,17 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
         //extract from db data to eventsNames
     }
 
-
-
-
-    private List<String[]> activeOrNot(int code){
+    public List<String[]> activeOrNot(int code){
+        /**
+         * The function loads the cards matching the conditions into the list
+         */
         List<String[]> ret = new ArrayList<>();
         retA.clear();
         retNA.clear();
         db.collection("TicketsInfo")
                 .whereEqualTo("OwnerEmail",Email)
                 .whereEqualTo("Active", code+"")
+                .whereEqualTo("ManagerConfirm", 1)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -137,7 +146,7 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0,0,100,"Main");
-        menu.add(0,1,200,"Upload ticket");
+
         menu.add(0,2,300,"Terms");
         menu.add(0,3,400,"Log Out");
         if(Email.equals("noashetrit@gmail.com")){
@@ -153,8 +162,7 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
         if (st.equals("manager page")) {
             startActivity(new Intent(this, Manager_Activity.class));
         }
-        if(st.equals("Main")){startActivity(new Intent(this, PersonalZone.class));}
-        if (st.equals("Upload ticket")) {startActivity(new Intent(this, UploadTicket_Activity.class));}
+        if(st.equals("Main")){startActivity(new Intent(this,MainActivity.class));}
         if(st.equals("Terms")) {startActivity(new Intent(this, Terms_activity.class));}
         if(st.equals("Log Out")) {
             mAuth.signOut();
@@ -172,13 +180,16 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        /**
+         * Transfers the user to the card update page
+         */
         if(aSwitch.isChecked()){
            // activeOrNot(1);
             String[] s  = retA.get(i);
             si = new Intent(this, UpdateTickets.class);
             si.putExtra("Information",s);
             si.putExtra("Email", Email);
-            si.putExtra("CanChange",1);
+
         }
         else{
             //activeOrNot(0);
@@ -188,7 +199,7 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
             si.putExtra("Information",s);
             si.putExtra("Email", Email);
 
-            si.putExtra("CanChange",0);
+
         }
 
 
@@ -198,21 +209,21 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void account(View view) {
-        Intent si = new Intent(PersonalZone.this, AccountDetails.class);
-        si.putExtra("Email",Email);
-        si.putExtra("code",2);
 
-        startActivity(si);
-
-    }
 
     public void back(View view) {
+        /**
+         * The function returns to the main screen
+         */
+
         s1 = new Intent(this, MainActivity.class);
         startActivity(s1);
     }
 
     public void upload(View view) {
+        /**
+         * Checks if the user can upload a ticket according to the date of the last time.
+         */
         if(Email.equals("noashetrit@gmail.com")) uploadp();
         else{
             db.collection("UserInfo").document(Email).get()
@@ -269,18 +280,31 @@ public class PersonalZone extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void uploadp() {
-        si = new Intent(this, UploadTicket_Activity.class);
+        si = new Intent(this, SelectPDF_Activity.class);
         si.putExtra("Email",Email);
 
         startActivity(si);
     }
 
     public void active(View view) {
+        /**
+         * Loads the list of available or unavailable cards
+         */
         if(aSwitch.isChecked()){
             activeOrNot(1);
         }
         else{
             activeOrNot(0);
         }
+    }
+
+    public void myTickets(View view) {
+        /**
+         * Transfers to a user's card page
+         */
+        si = new Intent(PersonalZone.this, myTickets_Activity.class);
+        si.putExtra("Email",Email);
+        startActivity(si);
+
     }
 }

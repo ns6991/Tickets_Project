@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46FF87D3"
+    android:background="#FDECEC"
     tools:context=".TicketsInformation">
 
     <LinearLayout
@@ -46,14 +46,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032"
-                android:textSize="16sp"
+                android:textColor="#77010E"
+                android:textSize="14sp"
                 android:textStyle="bold"/>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3" />
 
             <TextView
                 android:id="@+id/nameTvID"
@@ -61,14 +56,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textSize="16sp"
-                android:textColor="#930032"
+                android:textSize="14sp"
+                android:textColor="#77010E"
                 android:textStyle="bold"/>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3" />
 
             <TextView
                 android:id="@+id/placeTvID"
@@ -76,14 +66,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textSize="16sp"
-                android:textColor="#930032"
+                android:textSize="14sp"
+                android:textColor="#77010E"
                 android:textStyle="bold"/>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3" />
 
             <TextView
                 android:id="@+id/dateTimeID"
@@ -91,56 +76,21 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032"
-                android:textSize="16sp"
+                android:textColor="#77010E"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5" />
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/price_amount"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="7"
-                android:orientation="horizontal">
+                android:text="TextView"
+                android:textColor="#77010E"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5" />
 
-                <TextView
-                    android:id="@+id/priceTvID"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="35"
-                    android:textSize="10sp"
-                    android:text="TextView"
-                    android:textColor="#930032"
-                    android:textStyle="bold"/>
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="20" />
-
-                <TextView
-                    android:id="@+id/amountTV"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="35"
-                    android:textSize="10sp"
-                    android:text="TextView"
-                    android:textColor="#930032"
-                    android:textStyle="bold"/>
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5" />
-            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
@@ -154,7 +104,7 @@
                 android:layout_weight="7"
                 android:onClick="isAct"
                 android:text="Active"
-                android:textColor="#930032"
+                android:textColor="#77010E"
                 android:textStyle="bold"/>
 
             <Space
@@ -165,7 +115,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="7"
+                android:layout_weight="10"
                 android:orientation="horizontal">
 
                 <Space
@@ -173,32 +123,26 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
 
-                <Button
+                <ImageView
                     android:id="@+id/button"
-                    android:layout_width="0dp"
+                    android:layout_width="170dp"
                     android:layout_height="match_parent"
                     android:layout_weight="60"
-                    android:background="#FF3C7F"
-                    android:backgroundTint="#FF3C7F"
                     android:onClick="payScreen"
-                    android:text="buy ticket"
-                    android:textColor="#FFFFC2E9" />
+                    android:src="@drawable/buy" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10" />
 
-                <Button
+                <ImageView
                     android:id="@+id/button4"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="20"
-                    android:background="#FF3C7F"
+                    android:layout_width="138dp"
+                    android:layout_height="65dp"
+                    android:layout_weight="10"
                     android:onClick="back"
-                    android:text="back"
-                    android:textColor="#FFFFC2E9"
-                    android:textSize="12sp" />
+                    android:src="@drawable/back" />
 
                 <Space
                     android:layout_width="0dp"

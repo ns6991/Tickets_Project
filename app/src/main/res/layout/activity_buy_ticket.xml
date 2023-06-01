@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46FF87D3"
+    android:background="#FDECEC"
     tools:context=".BuyTicket_Activity">
 
     <LinearLayout
@@ -22,20 +22,7 @@
             android:layout_height="match_parent"
             android:layout_weight="90"
             android:orientation="vertical">
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5" />
 
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:textAlignment="center"
-                android:textColor="#FF3C7F"
-                android:textSize="20sp"
-                android:textStyle="bold" />
 
             <Space
                 android:layout_width="match_parent"
@@ -48,8 +35,8 @@
                 android:layout_weight="10"
                 android:text="buying tickets!"
                 android:textAlignment="center"
-                android:textColor="#FF3C7F"
-                android:textSize="40sp"
+                android:textColor="#820659"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <Space
@@ -57,102 +44,45 @@
                 android:layout_height="0dp"
                 android:layout_weight="5" />
 
-            <EditText
-                android:id="@+id/creditNum"
+            <TextView
+                android:id="@+id/price111"
+
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="10"
-                android:ems="10"
-                android:hint="credit card number"
-                android:inputType="numberDecimal"
-                android:textSize="16sp" />
+                android:layout_weight="30"
+                android:textAlignment="center"
+                android:textColor="#77010E"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5" />
 
-            <EditText
-                android:id="@+id/num3"
+            <ImageView
+                android:id="@+id/buyTicket"
+
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="10"
-                android:ems="10"
-                android:hint="cvv/svc"
-                android:inputType="numberDecimal"
-                android:textSize="16sp" />
+                android:layout_weight="20"
+                app:srcCompat="@drawable/buy" />
+
+
+
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5" />
-
-            <EditText
-                android:id="@+id/tockef"
+            <ImageView
+                android:id="@+id/button7"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
-                android:ems="10"
-                android:hint="card validity"
-                android:inputType="numberDecimal"
-                android:textSize="16sp" />
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5" />
 
-            <EditText
-                android:id="@+id/idNum"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:ems="10"
-                android:hint="your id number"
-                android:inputType="numberDecimal"
-                android:textSize="16sp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:orientation="horizontal">
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="70"
-                    android:background="#FF3C7F"
-                    android:backgroundTint="#E80C0C"
-                    android:onClick="buy"
-                    android:text="BUY"
-                    android:textColor="#FFC2E9"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10" />
-
-                <Button
-                    android:id="@+id/button7"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="20"
-                    android:background="#FF3C7F"
-                    android:backgroundTint="#E80C0C"
-                    android:onClick="back"
-                    android:text="back"
-                    android:textColor="#FFC2E9"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
+                app:srcCompat="@drawable/back"
+                android:onClick="back"/>
 
             <Space
                 android:layout_width="match_parent"

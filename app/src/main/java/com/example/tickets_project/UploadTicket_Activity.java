@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -13,9 +14,11 @@ import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -68,23 +71,24 @@ import javax.mail.Message;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 import java.util.Properties;
 
 public class UploadTicket_Activity extends AppCompatActivity {
 
-    String[] categories = {"soccer", "basketball game", "show", "play","musical" ,"movie", "other"};
-    String[] amountN = {"1", "2", "3", "4","5" };
-    List<String> ids =new ArrayList<String>();
-    EditText Name, Place,  price,  date, time;
+    String[] categories = {"soccer", "basketball game", "show", "play", "musical", "movie", "other"};
+    String[] amountN = {"1", "2", "3", "4", "5"};
+    List<String> ids = new ArrayList<String>();
+    EditText Name, Place, price, date, time;
     Spinner Category, amount;
-    String cat ,am;
-    Intent si,gi;
+    String cat, am;
+    Intent si, gi;
     String emailOfOwner;
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy HH:mm");
     SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yy");
 
     Uri mImg;
-    StorageReference mStorageRef  ;
+    StorageReference mStorageRef;
     DatabaseReference mDatabaseRef;
     StorageTask mUploadImageTask;
     ProgressBar progressBar;
@@ -93,8 +97,8 @@ public class UploadTicket_Activity extends AppCompatActivity {
     AlertDialog.Builder adb;
     AlertDialog ad;
 
-    ArrayAdapter<String> adp,adp2;
-    String upldID;
+    ArrayAdapter<String> adp, adp2;
+    String upldID, pho;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,11 +115,13 @@ public class UploadTicket_Activity extends AppCompatActivity {
         time = findViewById(R.id.timeID);
         gi = getIntent();
         emailOfOwner = gi.getStringExtra("Email");
+        pho = gi.getStringExtra("Phone");
+
         progressBar = findViewById(R.id.progressBar);
         upldID = gi.getStringExtra("upID");
         ids.add(upldID);
 
-        adp = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,categories);
+        adp = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, categories);
         Category.setAdapter(adp);
         Category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -129,7 +135,7 @@ public class UploadTicket_Activity extends AppCompatActivity {
             }
         });
 
-        adp2 = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,amountN);
+        adp2 = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, amountN);
         amount.setAdapter(adp2);
         amount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -148,7 +154,6 @@ public class UploadTicket_Activity extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsImages");
 
 
-
         adb = new AlertDialog.Builder(this);
 
         //Toast.makeText(UploadTicket_Activity.this, "hihihi" +ids.get(0), Toast.LENGTH_SHORT).show();
@@ -158,30 +163,33 @@ public class UploadTicket_Activity extends AppCompatActivity {
 
 
     public void ret(View view) {
+
+        /**
+         * The function returns to the main screen
+         */
         startActivity(new Intent(this, MainActivity.class));
     }
 
 
-
-
-
     private void updateUserInfo(String uploadID, String active, String lastUpload) throws ParseException {
-        Map<String, Object> one= new HashMap<>();;
-        one.put("UploadID",uploadID);
-        one.put("Active",active);
-        one.put("LastUpload",lastUpload);
+        /**
+         * The function updates the user information (according to the new upload) in the database
+         */
+        Map<String, Object> one = new HashMap<>();
+        ;
+        one.put("UploadID", uploadID);
+        one.put("Active", active);
+        one.put("LastUpload", lastUpload);
         Calendar c = Calendar.getInstance();
         c.setTime(format2.parse(lastUpload));
-        c.add(Calendar.DATE,45);
+        c.add(Calendar.DATE, 45);
         Date date = new Date(c.getTimeInMillis());
         String canUpload = format2.format(date);
-        one.put("CanUploadMore",canUpload);
+        one.put("CanUploadMore", canUpload);
 
 
-
-
-        db.collection("UserInfo").document(emailOfOwner).update("CanUploadMore",canUpload
-                ,"LastUpload",lastUpload)
+        db.collection("UserInfo").document(emailOfOwner).update("CanUploadMore", canUpload
+                        , "LastUpload", lastUpload)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -198,17 +206,28 @@ public class UploadTicket_Activity extends AppCompatActivity {
 
     }
 
-    private boolean checkValues(){
+    private boolean checkValues() {
+        /**
+         * Checking the correctness of the input
+         * @return boolean  - true if the input is valid , false if not
+         */
         try {
-            Date event = format2.parse(date.getText().toString());
-            String strDate = format2.format(Calendar.getInstance().getTime());
-            Date today = format2.parse(strDate);
-            if (event.before(today) || TextUtils.isEmpty(date.getText().toString())) {
-                date.setError("date cannot be empty or before today's date");
+
+            if ( TextUtils.isEmpty(date.getText().toString())) {
+
+                date.setError("date cannot be empty ");
                 date.requestFocus();
                 return false;
             }
-            if(ids.isEmpty()){
+            Date event = format2.parse(date.getText().toString());
+            String strDate = format2.format(Calendar.getInstance().getTime());
+            Date today = format2.parse(strDate);
+            if(event.before(today) ){
+                date.setError(" date cannot be before today's date ");
+                date.requestFocus();
+                return false;
+            }
+            if (ids.isEmpty()) {
                 return false;
 
             }
@@ -227,6 +246,11 @@ public class UploadTicket_Activity extends AppCompatActivity {
                 price.requestFocus();
                 return false;
             }
+            if(!checkTime(time.getText().toString())){
+                time.setError("the time should be proper");
+                time.requestFocus();
+                return false;
+            }
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -236,10 +260,33 @@ public class UploadTicket_Activity extends AppCompatActivity {
 
     }
 
+    private boolean checkTime(String time){
+        /**
+         * The function checks the correctness of the time
+         * @param String time
+         * @return boolean  - true if the input is valid , false if not
+         */
+        if(time.length()!=5) return false;
+        else if (Integer.parseInt(time.substring(0,2))>23 ||Integer.parseInt(time.substring(0,2))<0) {
+            return false;
+        }
+        else if (Integer.parseInt(time.substring(3,5))>59 ||Integer.parseInt(time.substring(3,5))<0) {
+            return false;
+        }
+        else if (time.charAt(2)!=':') {
+            return false;
+        }
+        return true;
+    }
 
 
-    private Map<String,String> createMap(){
-        Map<String,String> one= new HashMap<>();
+    private Map<String, String> createMap() {
+        /**
+         * Saves the card information in the data structure
+         * @return Map<String,String> with information about each ticket
+         */
+
+        Map<String, String> one = new HashMap<>();
 
         Date d = null;
         try {
@@ -248,38 +295,42 @@ public class UploadTicket_Activity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
         String datt = format2.format(d);
-        one.put("Name",Name.getText().toString().toLowerCase());
-        one.put("Place",Place.getText().toString());
-        one.put("Date",datt + "  " + time.getText().toString());
-        one.put("Category",cat);
-        one.put("Price",price.getText().toString());
-        one.put("Amount",am);
-        one.put("OwnerEmail",emailOfOwner);
-        one.put("UploadID",ids.get(0));
-        one.put("Active","1");
-        if(emailOfOwner.equals("noashetrit@gmail.com")) {
-            one.put("ManagerConfirm","1");
+        one.put("Name", Name.getText().toString().toLowerCase());
+        one.put("Place", Place.getText().toString());
+        one.put("Date", datt + "  " + time.getText().toString());
+        one.put("Category", cat);
+        one.put("Price", price.getText().toString());
+        one.put("Amount", am);
+        one.put("OwnerEmail", emailOfOwner);
+        one.put("UploadID", ids.get(0));
+        one.put("Active", "1");
+
+        if (emailOfOwner.equals("noashetrit@gmail.com")) {
+            one.put("ManagerConfirm", "1");
+
+        } else {
+            one.put("ManagerConfirm", "0");
 
         }
-        else {
-            one.put("ManagerConfirm","0");
-
-        }
+        one.put("phone", pho);
         return one;
 
     }
 
 
     public void uploadPost(View view) throws ParseException {
-        if(checkValues()){
-            Map<String,String> map1= createMap();
+        /**
+         * The action saves the new card in the database and displays a new alert
+         */
+
+        if (checkValues()) {
+            Map<String, String> map1 = createMap();
             String coll = "";
             int code = 0;
-            if(emailOfOwner.equals("noashetrit@gmail.com")){
+            if (emailOfOwner.equals("noashetrit@gmail.com")) {
                 coll = "TicketsInfo";
-                code =1;
-            }
-            else coll = "TicketsInfoToConfirm";
+                code = 1;
+            } else coll = "TicketsInfoToConfirm";
 
             db.collection(coll).document(map1.get("UploadID")).set(map1)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -298,9 +349,9 @@ public class UploadTicket_Activity extends AppCompatActivity {
                     });
 
             String strDate = format.format(Calendar.getInstance().getTime());
-            updateUserInfo(map1.get("UploadID"),map1.get("Active"),strDate );
+            updateUserInfo(map1.get("UploadID"), map1.get("Active"), strDate);
 
-            if(code==0){
+            if (code == 0) {
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(UploadTicket_Activity.this, "notification");
                 builder.setContentTitle("your Post successfully received");
                 builder.setContentText("After the system check your post, a mail will be send to you with information about your ticket");
@@ -308,7 +359,17 @@ public class UploadTicket_Activity extends AppCompatActivity {
                 builder.setAutoCancel(true);
 
                 NotificationManagerCompat managerCompat = NotificationManagerCompat.from(UploadTicket_Activity.this);
-                managerCompat.notify(1,builder.build());
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                managerCompat.notify(1, builder.build());
 
             }
 
@@ -357,6 +418,11 @@ public class UploadTicket_Activity extends AppCompatActivity {
     }
 
     private void openFiles(){
+        /**
+         * The function opens the photo gallery on the user's phone
+         */
+
+
         Intent in = new Intent();
         in.setType("image/*");
         in.setAction(Intent.ACTION_GET_CONTENT);
@@ -365,12 +431,22 @@ public class UploadTicket_Activity extends AppCompatActivity {
     }
 
     private String getFileExtension(Uri uri){
+        /**
+         * The function gets the extension of the selected file
+         * @return String with extension of the selected file
+         */
+
         ContentResolver cR = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
 
     }
     private void uploadFile(){
+        /**
+         * Uploading the selected image to the database
+         */
+
+
         if(mImg != null){
 
             StorageReference fileRef = mStorageRef.child(ids.get(0) + "." + getFileExtension(mImg));
@@ -431,6 +507,11 @@ public class UploadTicket_Activity extends AppCompatActivity {
 
 
     private boolean relevant(String date){
+        /**
+         * Checking if the entered date has passed
+         * @param String date
+         * @return boolean  - false if the date has passed , true if not
+         */
         try {
             Date req = format2.parse(date);
             String strDate = format2.format(Calendar.getInstance().getTime());
@@ -444,7 +525,23 @@ public class UploadTicket_Activity extends AppCompatActivity {
 
 
     }
+
+    private void sendMassage(String p){
+        /**
+         * The function sends a message to the user
+         *  @param    String phone number of user.
+         */
+        String sms = "The ticket you wanted to buy was probably uploaded to the app \nopen tickets application! ";
+
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(p,null,sms,null,null);
+
+    }
+
     private void checkWishList() {
+        /**
+         * Checks if the uploaded card matches one of the cards in the request list
+         */
         db.collection("WishList")
                 .whereEqualTo("EventPlace", Place.getText().toString())
                 .whereEqualTo("Category", cat)
@@ -455,17 +552,8 @@ public class UploadTicket_Activity extends AppCompatActivity {
                         List<DocumentSnapshot> snapshots = queryDocumentSnapshots.getDocuments();
                         for (DocumentSnapshot sn : snapshots) {
                             if(relevant(sn.getString("EventDate")) && (sn.getString("EventDate").substring(0,8)).equals(date.getText().toString())){
-                                if (sn.getString("EventName").equals(Name.getText().toString())) {
-                                    System.out.println("email sent..............");
-                                    Log.d(TAG,"email send");
-                                    Toast.makeText(UploadTicket_Activity.this, "hihihhi", Toast.LENGTH_SHORT).show();
+                                sendMassage(sn.getString("phone"));
 
-                                    //sendEmail(sn.getString("OwnerEmail"), 1);
-                                } else {
-                                    System.out.println("email sent2..............");
-
-                                    //sendEmail(sn.getString("OwnerEmail"), 2);
-                                }
                             }
 
 
@@ -482,13 +570,4 @@ public class UploadTicket_Activity extends AppCompatActivity {
                 });
     }
 
-
-
-
-    public void uploadPDF(View view) {
-        //setUploadID();
-        si = new Intent(this, SelectPDF_Activity.class);
-        si.putExtra("Email" , emailOfOwner);
-        startActivity(si);
-    }
 }

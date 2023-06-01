@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46FF87D3"
+    android:background="#FDECEC"
     tools:context=".UpdateTickets">
 
     <LinearLayout
@@ -40,6 +40,18 @@
                 android:layout_height="0dp"
                 android:layout_weight="5" />
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:onClick="uploadPDF"
+                android:src="@drawable/selectuploadpdf" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5" />
+
 
 
             <TextView
@@ -48,14 +60,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032"
-                android:textSize="16sp"
+                android:textColor="#77010E"
+                android:textSize="14sp"
                 android:textStyle="bold"/>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3" />
 
             <TextView
                 android:id="@+id/placeTvID2"
@@ -63,14 +70,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032"
-                android:textSize="16sp"
+                android:textColor="#77010E"
+                android:textSize="14sp"
                 android:textStyle="bold"/>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3" />
 
             <TextView
                 android:id="@+id/dateTimeID2"
@@ -78,8 +80,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="7"
                 android:text="TextView"
-                android:textColor="#930032"
-                android:textSize="16sp"
+                android:textColor="#77010E"
+                android:textSize="14sp"
                 android:textStyle="bold"/>
 
             <Space
@@ -91,7 +93,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5"
+                android:layout_weight="4"
                 android:orientation="horizontal">
 
                 <Space
@@ -105,7 +107,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="40"
                     android:text="Tickets Price:\n"
-                    android:textColor="#930032"
+                    android:textColor="#77010E"
                     android:textSize="10sp"
                     android:textStyle="bold"/>
 
@@ -120,7 +122,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="40"
                     android:text="Number of Tickets :\n"
-                    android:textColor="#930032"
+                    android:textColor="#77010E"
                     android:textSize="10sp"
                     android:textStyle="bold"/>
 
@@ -129,10 +131,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
             </LinearLayout>
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -151,8 +150,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="35"
                     android:text="TextView"
-                    android:textColor="#930032"
-                    android:textSize="12sp"
+                    android:textColor="#77010E"
+                    android:textSize="10sp"
+                    android:enabled="true"
                     android:textStyle="bold"/>
 
                 <Space
@@ -166,8 +166,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="35"
                     android:text="TextView"
-                    android:textColor="#930032"
-                    android:textSize="12sp"
+                    android:textColor="#77010E"
+                    android:textSize="10sp"
+                    android:enabled="true"
                     android:textStyle="bold"/>
 
                 <Space
@@ -185,10 +186,10 @@
                 android:id="@+id/switch2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="10"
+                android:layout_weight="7"
                 android:onClick="active"
                 android:text="ACTIVE"
-                android:textColor="#FF3C7F" />
+                android:textColor="#820659" />
 
             <Space
                 android:layout_width="match_parent"
@@ -206,29 +207,24 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
 
-                <Button
-                    android:layout_width="0dp"
+                <ImageView
+                    android:layout_width="258dp"
                     android:layout_height="match_parent"
                     android:layout_weight="60"
-                    android:background="#FF3C7F"
                     android:onClick="done"
-                    android:text="UPDATE"
-                    android:textColor="#FFFFC2E9"
-                    android:textSize="20sp" />
+                    android:src="@drawable/update" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10" />
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <ImageView
+                    android:layout_width="68dp"
+                    android:layout_height="56dp"
                     android:layout_weight="20"
-                    android:background="#FF3C7F"
                     android:onClick="back"
-                    android:text="BACK"
-                    android:textColor="#FFFFC2E9" />
+                    android:src="@drawable/back" />
 
                 <Space
                     android:layout_width="0dp"

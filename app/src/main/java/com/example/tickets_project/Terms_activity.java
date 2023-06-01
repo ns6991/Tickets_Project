@@ -23,7 +23,7 @@ public class Terms_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms);
 
-        tv= findViewById(R.id.textView6);
+        tv= findViewById(R.id.textView14);
 
         s = "";
         try{
@@ -37,14 +37,13 @@ public class Terms_activity extends AppCompatActivity {
         }catch (IOException ex){
             ex.printStackTrace();
         }
-        tv.setText(s);
+        tv.setText("\n\n\n\n\n"+s);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0,0,100,"Main");
-        menu.add(0,0,200,"Upload ticket");
         menu.add(0,0,300,"Personal area");
 
 
@@ -54,7 +53,6 @@ public class Terms_activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         String st = item.getTitle().toString();
         if(st.equals("Main")){startActivity(new Intent(this, MainActivity.class));}
-        if (st.equals("Upload ticket")) {startActivity(new Intent(this, UploadTicket_Activity.class));}
         if(st.equals("Personal area")) {startActivity(new Intent(this, PersonalZone.class));}
 
         return true;
